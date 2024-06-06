@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: cards
+  
+  datasource:
+    url: jdbc:mysql://localhost:3306/cards
+    username: root
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver 
+    
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+
+server:
+  port: 9004
+  
+  
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    env:
+      enabled: true
+        
+        
+info:
+  app:
+    name: cards
+    description: Bank Cards MicroService
+  version: 1.0.0
+  location: Toronto
+
+
+  
+  

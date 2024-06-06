@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: accounts
+  
+  datasource:
+    url: jdbc:mysql://localhost:3306/accounts
+    username: root
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver 
+    
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+
+server:
+  port: 9003
+  
+  
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    env:
+      enabled: true
+        
+        
+info:
+  app:
+    name: accounts
+    description: Bank Accounts MicroService
+  version: 1.0.0
+  location: Toronto
+
+
+  
+  
