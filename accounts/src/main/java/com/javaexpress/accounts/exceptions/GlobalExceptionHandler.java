@@ -7,19 +7,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class ServiceExceptionHandler {
+public class GlobalExceptionHandler {
 	
-	@ExceptionHandler(ResourceNotFoundException.class)
-	public ResponseEntity<ErrorAPI> handleException(final ResourceNotFoundException exception) {
+	@ExceptionHandler(AccountRunTimeException.class)
+	public ResponseEntity<ErrorAPI> handleException(final AccountRunTimeException exception) {
 		return makeErrorResponseEntity(exception.getAccountException());
 	}
 	
-	@ExceptionHandler(CustomerAlreadyExistsException.class)
-	public ResponseEntity<ErrorAPI> handleException(final CustomerAlreadyExistsException exception) {
-		return makeErrorResponseEntity(exception.getAccountException());
-	}
-	
-	private ResponseEntity<ErrorAPI> makeErrorResponseEntity(final AccountsException accountException) {
+	private ResponseEntity<ErrorAPI> makeErrorResponseEntity(final AccountExceptionType accountException) {
 		ErrorAPI error = ErrorAPI.builder()
 								.statusCode(accountException.getStatus().value())
 								.title(accountException.getMessage())

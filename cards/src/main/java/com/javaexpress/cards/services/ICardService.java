@@ -1,18 +1,29 @@
 package com.javaexpress.cards.services;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.javaexpress.cards.dto.CardDTO;
+import com.javaexpress.cards.enums.CardType;
+
 
 @Service
 public interface ICardService {
+
+	void createCard(String mobileNumber, CardType cardType);
 	
-	void createCard();
+	public List<CardDTO> fetchCards(String mobileNumber);
 	
-	CardDTO fetchCard(String mobileNumber);
+	public CardDTO fetchCard(String cardNumber);
+
+	public boolean updateCardDetails(CardDTO cardDTO);
+
+	public boolean deactivateCard(String cardNumber);
 	
-	boolean updateCard(CardDTO cardDTO);
+	public boolean deactivateAllCards(String mobileNumber);
 	
-	void deactivateCard(String mobileNumber);
+	public void deleteCard(String mobileNumber, CardType cardType);
+
 
 }

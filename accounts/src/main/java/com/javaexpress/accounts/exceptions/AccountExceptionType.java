@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum AccountsException {
+public enum AccountExceptionType {
 	
 	CUSTOMER_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Mobile Number Already Exists !"),
 	CUSTOMER_NOT_FOUND_EXCEPTION(HttpStatus.BAD_REQUEST, "Customer Not Found !"),

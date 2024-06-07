@@ -12,9 +12,7 @@ import com.javaexpress.accounts.entity.Account;
 import com.javaexpress.accounts.enums.AccountType;
 import com.javaexpress.accounts.entity.Customer;
 import com.javaexpress.accounts.exceptions.AccountRunTimeException;
-import com.javaexpress.accounts.exceptions.AccountsException;
-import com.javaexpress.accounts.exceptions.CustomerAlreadyExistsException;
-import com.javaexpress.accounts.exceptions.ResourceNotFoundException;
+import com.javaexpress.accounts.exceptions.AccountExceptionType;
 import com.javaexpress.accounts.repository.AccountRepository;
 import com.javaexpress.accounts.repository.CustomerRepository;
 import com.javaexpress.accounts.services.IAccountService;
@@ -37,7 +35,7 @@ public class AccountService implements IAccountService{
 		Optional<Customer> optional = customerRepository.findByMobileNumber(customerDTO.getMobileNumber());
 		if(optional.isPresent()) {
 			
-			throw new CustomerAlreadyExistsException(AccountsException.CUSTOMER_ALREADY_EXISTS);
+			throw new AccountRunTimeException(AccountExceptionType.CUSTOMER_ALREADY_EXISTS);
 		}
 		Customer customer = new Customer();
 		BeanUtils.copyProperties(customerDTO, customer);
@@ -84,10 +82,10 @@ public class AccountService implements IAccountService{
 	@Override
 	public CustomerDTO fetchAccount(String mobileNumber) {
 		Customer customer = customerRepository.findByMobileNumber(mobileNumber)
-				.orElseThrow(() -> new ResourceNotFoundException(AccountsException.CUSTOMER_NOT_FOUND_EXCEPTION));
+				.orElseThrow(() -> new AccountRunTimeException(AccountExceptionType.CUSTOMER_NOT_FOUND_EXCEPTION));
 		
 		Account account = accountRepository.findByCustomerId(customer.getCustomerId())
-				.orElseThrow(() -> new ResourceNotFoundException(AccountsException.ACCOUNT_NOT_FOUND_EXCEPTION));
+				.orElseThrow(() -> new AccountRunTimeException(AccountExceptionType.ACCOUNT_NOT_FOUND_EXCEPTION));
 		
 		CustomerDTO customerDTO = new CustomerDTO();
 		BeanUtils.copyProperties(customer, customerDTO);
@@ -107,14 +105,14 @@ public class AccountService implements IAccountService{
 		
 		if(accountDTO != null) {
 			Account account = accountRepository.findByAccountNumber(accountDTO.getAccountNumber())
-					.orElseThrow(() -> new ResourceNotFoundException(AccountsException.ACCOUNT_NOT_FOUND_EXCEPTION));
+					.orElseThrow(() -> new AccountRunTimeException(AccountExceptionType.ACCOUNT_NOT_FOUND_EXCEPTION));
 			
 			BeanUtils.copyProperties(accountDTO, account);
 			
 			accountRepository.save(account);
 			
 			Customer customer = customerRepository.findById(account.getCustomerId())
-					.orElseThrow(() -> new ResourceNotFoundException(AccountsException.CUSTOMER_NOT_FOUND_EXCEPTION));
+					.orElseThrow(() -> new AccountRunTimeException(AccountExceptionType.CUSTOMER_NOT_FOUND_EXCEPTION));
 			
 			BeanUtils.copyProperties(customerDTO, customer);
 			
@@ -122,7 +120,7 @@ public class AccountService implements IAccountService{
 			
 			isUpdated = true;
 		} else {
-			throw new AccountRunTimeException(AccountsException.BAD_REQUEST_EXCEPTION);
+			throw new AccountRunTimeException(AccountExceptionType.BAD_REQUEST_EXCEPTION);
 		}
 		return isUpdated;
 	}
