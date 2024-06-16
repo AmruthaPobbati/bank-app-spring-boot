@@ -1,8 +1,11 @@
 package com.javaexpress.accounts.services.impl;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -80,28 +83,28 @@ public class AccountService implements IAccountService{
 	
 
 	@Override
-	public CustomerDTO fetchAccount(String mobileNumber) {
+	public CustomerDTO fetchAccounts(String mobileNumber) {
 		Customer customer = customerRepository.findByMobileNumber(mobileNumber)
 				.orElseThrow(() -> new AccountRunTimeException(AccountExceptionType.CUSTOMER_NOT_FOUND_EXCEPTION));
 		
-		Account account = accountRepository.findByCustomerId(customer.getCustomerId())
+		List<Account> accounts = accountRepository.findByCustomerId(customer.getCustomerId())
 				.orElseThrow(() -> new AccountRunTimeException(AccountExceptionType.ACCOUNT_NOT_FOUND_EXCEPTION));
 		
 		CustomerDTO customerDTO = new CustomerDTO();
 		BeanUtils.copyProperties(customer, customerDTO);
-		AccountDTO accountDTO = new AccountDTO();
-		BeanUtils.copyProperties(account, accountDTO);
-		customerDTO.setAccountDTO(accountDTO);
+		
+		ModelMapper modelMapper = new ModelMapper();
+		List<AccountDTO> accountDTOs = modelMapper.map(accounts, new TypeToken<List<AccountDTO>>(){}.getType());
+		customerDTO.setAccountDTOs(accountDTOs);
 		
 		return customerDTO;
 	}
 
 	@Override
 	@Transactional
-	public boolean updateAccount(CustomerDTO customerDTO) {
+	public boolean updateAccount(AccountDTO accountDTO) {
 	
 		boolean isUpdated = false;
-		AccountDTO accountDTO = customerDTO.getAccountDTO();
 		
 		if(accountDTO != null) {
 			Account account = accountRepository.findByAccountNumber(accountDTO.getAccountNumber())
@@ -110,13 +113,6 @@ public class AccountService implements IAccountService{
 			BeanUtils.copyProperties(accountDTO, account);
 			
 			accountRepository.save(account);
-			
-			Customer customer = customerRepository.findById(account.getCustomerId())
-					.orElseThrow(() -> new AccountRunTimeException(AccountExceptionType.CUSTOMER_NOT_FOUND_EXCEPTION));
-			
-			BeanUtils.copyProperties(customerDTO, customer);
-			
-			customerRepository.save(customer);
 			
 			isUpdated = true;
 		} else {

@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: eurekaserver
+server:
+  port: 9002
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+    service-url:
+      defaultZone: http://localhost:9002/eureka/
+  instance:
+    ip-address: true

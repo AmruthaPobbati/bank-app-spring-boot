@@ -3,6 +3,7 @@ package com.javaexpress.accounts.controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.javaexpress.accounts.dto.AccountDTO;
 import com.javaexpress.accounts.dto.CustomerDTO;
 import com.javaexpress.accounts.services.IAccountService;
 
@@ -43,13 +44,13 @@ public class AccountController {
 	@GetMapping("fetch")
 	public CustomerDTO getAccount(@RequestParam String mobileNumber) {
 		log.info("AccountController :: getAccount");
-		return accountService.fetchAccount(mobileNumber);
+		return accountService.fetchAccounts(mobileNumber);
 	}
 	
 	@PutMapping("update")
-	public boolean updateAccount(@RequestBody CustomerDTO customerDTO) {
+	public boolean updateAccount(@RequestBody AccountDTO accountDTO) {
 		log.info("AccountController :: updateAccount");
-		return accountService.updateAccount(customerDTO);
+		return accountService.updateAccount(accountDTO);
 	}
 	
 	@DeleteMapping("delete") 

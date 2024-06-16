@@ -11,8 +11,20 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
 
-
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        sliding-window-size: 5
+        permitted-number-of-calls-in-half-open-state: 2
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 30s
+    
 server:
   port: 9003
   
@@ -26,7 +38,15 @@ management:
     env:
       enabled: true
         
-        
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:9002/eureka/
+  instance:
+    ip-address: true
+    
 info:
   app:
     name: accounts
@@ -34,6 +54,9 @@ info:
   version: 1.0.0
   location: Toronto
 
-
-  
+logging:
+  pattern:
+    level: '%5p [%X{traceId:-}, %X{spanId:-}, ${spring.application.name}'
+  file:
+    name: account_logs/accounts.log
   

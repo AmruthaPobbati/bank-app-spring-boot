@@ -2,14 +2,18 @@ package com.javaexpress.accounts.dto;
 
 import java.util.List;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
-public class CustomerDTO {
+@Builder
+public class CustomerDetailsDTO {
 	
 	private String name;
 	private String mobileNumber;
 	private String email;
-	private List<AccountDTO> accountDTOs;
+	private List<AccountDTO> accountDTO;
+	private List<CardDTO> cardDTO;
+	private LoanDTO loanDTO;
 
 }

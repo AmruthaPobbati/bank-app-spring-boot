@@ -26,13 +26,27 @@ management:
     env:
       enabled: true
         
-        
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:9002/eureka/
+  instance:
+    ip-address: true
+            
 info:
   app:
     name: cards
     description: Bank Cards MicroService
   version: 1.0.0
   location: Toronto
+  
+logging:
+  pattern:
+    level: '%5p [%X{traceId:-}, %X{spanId:-}, ${spring.application.name}'
+  file:
+    name: card_logs/cards.log
 
 
   
