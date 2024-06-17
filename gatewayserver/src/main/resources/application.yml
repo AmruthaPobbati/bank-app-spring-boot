@@ -1,0 +1,78 @@
+spring:
+  application:
+    name: gatewayserver
+     
+  cloud:
+    gateway:
+      enabled: true
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+      - id: accounts-service
+        uri: lb://ACCOUNTS
+        predicates:
+        - Path=/javaexpress/accounts/**
+        filters:
+        - RewritePath=/javaexpress/accounts/?(?<segment>.*), /$\{segment}
+      - id: cards-service
+        uri: lb://CARDS
+        predicates:
+        - Path=/javaexpress/cards/**
+        filters:
+        - RewritePath=/javaexpress/cards/?(?<segment>.*), /$\{segment}
+      - id: loans-service
+        uri: lb://LOANS
+        predicates:
+        - Path=/javaexpress/loans/**
+        filters:
+        - RewritePath=/javaexpress/loans/?(?<segment>.*), /$\{segment}
+      
+server:
+  port: 9006    
+  
+           
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    env:
+      enabled: true
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+      
+  tracing:
+    sampling:
+      probability: 1
+      
+  endpoint:
+    gateway:
+      enabled: true
+     
+     
+      
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:9002/eureka/
+  instance:
+    ip-address: true
+    
+info:
+  app:
+    name: gatewayserver
+    description: Gateway Server
+  version: 1.0.0
+  location: Toronto
+  
+logging:
+  pattern:
+    level: '%5p [%X{traceId:-}, %X{spanId:-}, ${spring.application.name}'
+  file:
+    name: gateway_logs/gateway.log
