@@ -29,44 +29,44 @@ public class CardController {
 	
 	@PostMapping("create")
 	public String createCard(@RequestParam String mobileNumber, @RequestParam CardType cardType) {
-		log.info("CardController :: createCard");
+		log.info("CardController :: createCard: {} [{}]", mobileNumber, cardType);
 		cardService.createCard(mobileNumber, cardType);
 		return "Card Created Successfully !";
 	}
 	
 	@GetMapping("fetchAll")
 	public List<CardDTO> getAllCards(@RequestParam String mobileNumber) {
-		log.info("CardController :: getAllCards");
+		log.info("CardController :: getAllCards: {}", mobileNumber);
 		return cardService.fetchCards(mobileNumber);
 	}
 	
 	@GetMapping("cardDetails")
 	public CardDTO getCardDetails(@RequestParam String cardNumber) {
-		log.info("CardController :: getCardDetails");
+		log.info("CardController :: getCardDetails: {}", cardNumber);
 		return cardService.fetchCard(cardNumber);
 	}
 	
 	@PutMapping("updateDetails")
 	public boolean updateCardDetails(@RequestBody CardDTO cardDTO) {
-		log.info("CardController :: updateCardDetails");
+		log.info("CardController :: updateCardDetails: {}", cardDTO.getCardNumber());
 		return cardService.updateCardDetails(cardDTO);
 	}
 	
 	@PutMapping("deactivate")
 	public boolean deactivateCard(@RequestParam String cardNumber) {
-		log.info("CardController :: deactivateCard");
+		log.info("CardController :: deactivateCard: {}", cardNumber);
 		return cardService.deactivateCard(cardNumber);
 	}
 	
 	@PutMapping("deactivateAll")
 	public void deactivateAllCards(@RequestParam String mobileNumber) {
-		log.info("CardController :: deactivateAllCards");
+		log.info("CardController :: deactivateAllCards: {}", mobileNumber);
 		cardService.deactivateAllCards(mobileNumber);
 	}
 	
 	@DeleteMapping("delete")
 	public void deleteCard(@RequestParam String mobileNumber, @RequestParam CardType cardType) {
-		log.info("CardController :: deleteCard");
+		log.info("CardController :: deleteCard: {} [{}]", mobileNumber, cardType);
 		cardService.deleteCard(mobileNumber, cardType);
 	}
 

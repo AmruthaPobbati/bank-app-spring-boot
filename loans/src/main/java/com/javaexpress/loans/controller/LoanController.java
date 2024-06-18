@@ -32,25 +32,27 @@ public class LoanController {
     @PostMapping("/create")
     @ResponseStatus(code = HttpStatus.CREATED)
     public String createLoan(@RequestParam String mobileNumber) {
-    	log.info("LoansController :: createLoan");
+    	log.info("LoansController :: createLoan: {}", mobileNumber);
         loanService.createLoan(mobileNumber);
         return "Loan created successfully";
     }
     
     @GetMapping("/fetch")
     public LoanDTO fetchLoansDetails(@RequestParam String mobileNumber) {
-    	log.info("LoansController :: fetchLoansDetails");
+    	log.info("LoansController :: fetchLoansDetails: {}", mobileNumber);
     	return loanService.fetchLoan(mobileNumber);
     }
     
     @PutMapping("/update")
     public Boolean updateLoansDetails(@RequestBody LoanDTO loansDto) {
+    	log.info("LoansController :: updateLoansDetails: {}", loansDto.getLoanNumber());
     	loanService.updateLoan(loansDto);
     	return true;
     }
     
     @DeleteMapping("/delete")
     public Boolean deleteLoanDetails(@RequestParam String mobileNumber) {
+    	log.info("LoansController :: deleteLoanDetails: {}", mobileNumber);
     	loanService.deleteLoan(mobileNumber);
     	return true;
     }

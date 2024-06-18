@@ -75,4 +75,4 @@ logging:
   pattern:
     level: '%5p [%X{traceId:-}, %X{spanId:-}, ${spring.application.name}'
   file:
-    name: gateway_logs/gateway.log
+    name: C:/Users/Administrator/workspace/BankAppWorkSpace/elk_logs/gateway.log

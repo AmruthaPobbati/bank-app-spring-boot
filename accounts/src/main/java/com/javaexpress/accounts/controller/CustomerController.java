@@ -21,7 +21,7 @@ public class CustomerController {
 	
 	@GetMapping("fetch")
 	public CustomerDetailsDTO fetchCustomerDetails(@RequestParam String mobileNumber) {
-		log.info("CustomerController :: fetchCustomerDetails");
+		log.info("CustomerController :: fetchCustomerDetails: {}", mobileNumber);
 		return customerService.fetchCustomer(mobileNumber);
 	}
 

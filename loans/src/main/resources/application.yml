@@ -54,7 +54,7 @@ logging:
   pattern:
     level: '%5p [%X{traceId:-}, %X{spanId:-}, ${spring.application.name}'
   file:
-    name: loan_logs/loans.log
+    name: C:/Users/Administrator/workspace/BankAppWorkSpace/elk_logs/loans.log
 
   
   

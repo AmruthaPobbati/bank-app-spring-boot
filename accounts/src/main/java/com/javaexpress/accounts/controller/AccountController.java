@@ -29,33 +29,33 @@ public class AccountController {
 	
 	@PostMapping("createChecking")
 	String createCheckingAccount(@RequestBody CustomerDTO customerDTO) {
-		log.info("AccountController :: createAccount");
+		log.info("AccountController :: createAccount: {}", customerDTO.getName());
 		accountService.createCheckingAccount(customerDTO);
 		return "Account Created Successfully !";
 	}
 	
 	@PostMapping("createSavings")
 	String createSavingsAccount(@RequestBody CustomerDTO customerDTO) {
-		log.info("AccountController :: createAccount");
+		log.info("AccountController :: createAccount: {}", customerDTO.getName());
 		accountService.createSavingsAccount(customerDTO);
 		return "Savings Account Created Successfully !";
 	}
 	
 	@GetMapping("fetch")
 	public CustomerDTO getAccount(@RequestParam String mobileNumber) {
-		log.info("AccountController :: getAccount");
+		log.info("AccountController :: getAccount: {}", mobileNumber);
 		return accountService.fetchAccounts(mobileNumber);
 	}
 	
 	@PutMapping("update")
 	public boolean updateAccount(@RequestBody AccountDTO accountDTO) {
-		log.info("AccountController :: updateAccount");
+		log.info("AccountController :: updateAccount: {}", accountDTO.getAccountNumber());
 		return accountService.updateAccount(accountDTO);
 	}
 	
 	@DeleteMapping("delete") 
 	public void deleteAccount(@RequestParam String mobileNumber) {
-		log.info("AccountController :: deleteAccount");
+		log.info("AccountController :: deleteAccount: {}", mobileNumber);
 		accountService.deleteAccount(mobileNumber);
 	}
 
